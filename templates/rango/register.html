@@ -6,12 +6,23 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Register for Rango</h1>
-{% if registered %}
-Rango says: <strong>thank you for registering!</strong>
-<a href="{% url 'rango:index' %}">Return to the homepage.</a><br /> 
-{% else %}
-Rango says: <strong>register here!</strong><br /> 
+<div class="jumbotron p-4"> 
+    <div class="container">
+        <h1 class="jumbotron-heading">Register for Rango</h1> 
+        <div>
+            <h2 class="h2">
+                {% if registered %}
+                    Rango says: <strong>thank you for registering!</strong>
+                    <a href="{% url 'rango:index' %}">Return to the homepage.</a><br/> 
+                {% else %}
+                    Rango says: <strong>register here!</strong><br /> 
+                {% endif %}
+            </h2>
+        <strong>{{ boldmessage }}</strong> 
+        </div>
+    </div> 
+</div>
+
 <form id="user_form" method="post" action="{% url 'rango:register' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <!-- Display each form  -->
