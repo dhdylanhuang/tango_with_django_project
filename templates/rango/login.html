@@ -7,6 +7,11 @@
 
 {% block body_block %}
 <h1>Login to Rango</h1>
+<div class="jumbotron p-4"> 
+    <div class="container">
+        <h1 class="jumbotron-heading">Login to Rango</h1> 
+    </div> 
+</div>
 <form id="login_form" method="post" action="{% url 'rango:login' %}">
     {% csrf_token %}
     Username: <input type="text" name="username" value="" size="50" />
