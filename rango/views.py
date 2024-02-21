@@ -88,7 +88,7 @@ def add_page(request, category_name_slug):
     context_dict = {'form': form, 'category': category}
     return render(request, 'rango/add_page.html', context=context_dict)
         
-def register(request):
+#def register(request):
     #indicates whether reg was succesful
     registered = False
     #if it's a HTTP POST, we're interested in processing form data
@@ -120,7 +120,7 @@ def register(request):
                              'profile_form': profile_form,
                              'registered': registered})
 
-def user_login(request):
+#def user_login(request):
     if request.method == 'POST':
         # We use request.POST.get('<variable>') as opposed
         # to request.POST['<variable>'], because the
@@ -149,8 +149,8 @@ def user_login(request):
 def restricted(request):
     return render(request, 'rango/restricted.html')
 
-@login_required
-def user_logout(request):
+#@login_required
+#def user_logout(request):
     logout(request)
     return redirect(reverse('rango:index'))
 
