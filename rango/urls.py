@@ -16,5 +16,6 @@ urlpatterns = [
     #path('login/', views.user_login, name='login'),
     path('restricted/', views.restricted, name='restricted'),
     path('search/', views.search, name='search'),
+    path('rango/goto/', views.goto_url, name='goto'),
     #path('logout/', views.user_logout, name='logout'),
 ]

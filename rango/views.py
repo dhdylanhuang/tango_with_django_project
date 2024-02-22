@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from rango.forms import CategoryForm
 from rango.forms import PageForm
@@ -42,7 +42,7 @@ def show_category(request, category_name_slug):
     context_dict = {}
     try:
         category = Category.objects.get(slug=category_name_slug)
-        pages = Page.objects.filter(category=category)
+        pages = Page.objects.filter(category=category).order_by('-views')
         context_dict['pages'] = pages
         context_dict['category'] = category
     except Category.DoesNotExist:
@@ -163,6 +163,21 @@ def restricted(request):
 #def user_logout(request):
     logout(request)
     return redirect(reverse('rango:index'))
+
+def goto_url(request):
+    page_id = request.GET.get('page_id')
+    if page_id:
+        try:
+            page = Page.objects.get(id=page_id)
+            page.views += 1
+            page.save()
+            return redirect(page.url)
+        except Page.DoesNotExist:
+            # If no Page is found, redirect to the homepage
+            return HttpResponseRedirect(reverse('rango:index'))
+    else:
+        # If page_id is not provided, also redirect to the homepage
+        return HttpResponseRedirect(reverse('rango:index'))
 
 def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, 'visits', '1')) 

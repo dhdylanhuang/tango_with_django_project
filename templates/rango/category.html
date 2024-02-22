@@ -20,7 +20,12 @@
         {% if pages %}
             <ul>
             {% for page in pages %}
-                <li><a href="{{ page.url }}">{{ page.title }}</a></li> 
+                <li><a href="{% url 'rango:goto' %}?page_id={{ page.id }}">{{ page.title }}</a></li>
+                {% if page.views == 1 %}
+                (1 view)
+            {% else %}
+                ({{ page.views }} views)
+            {% endif %}
             {% endfor %}
             </ul>
             {% if user.is_authenticated %}
