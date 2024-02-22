@@ -48,6 +48,13 @@ def show_category(request, category_name_slug):
     except Category.DoesNotExist:
         context_dict['category'] = None
         context_dict['pages'] = None
+        
+    if request.method == 'POST':
+        query = request.POST.get('query').strip()
+        if query:
+            # Assuming run_query is your function to perform the search
+            result_list = run_query(query)
+            context_dict['result_list'] = result_list
     return render(request, 'rango/category.html', context=context_dict)
 
 @login_required
