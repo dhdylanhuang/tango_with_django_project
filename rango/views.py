@@ -5,7 +5,7 @@ from django.urls import reverse
 from rango.forms import CategoryForm
 from rango.forms import PageForm
 from rango.forms import UserForm, UserProfileForm
-from rango.models import Category 
+from rango.models import Category, UserProfile 
 from rango.models import Page
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -56,6 +56,33 @@ def show_category(request, category_name_slug):
             result_list = run_query(query)
             context_dict['result_list'] = result_list
     return render(request, 'rango/category.html', context=context_dict)
+
+@login_required
+def register_profile(request):
+    if request.method == 'POST':
+        profile_form = UserProfileForm(request.POST, request.FILES)
+        if profile_form.is_valid():
+            # Ensure we associate the profile with the current user
+            user_profile = profile_form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect('rango:index')  # Redirect to a desired page after successful registration
+        else:
+            print(profile_form.errors)
+    else:
+        profile_form = UserProfileForm()
+    
+    return render(request, 'rango/profile_registration.html', {'profile_form': profile_form})
+
+@login_required
+def profile_view(request):
+    user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=user)
+    context_dict = {
+        'user': user,
+        'user_profile': user_profile,
+    }
+    return render(request, 'rango/profile.html', context=context_dict)
 
 @login_required
 def add_category(request):

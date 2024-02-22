@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Complete Your Profile</h2>
+    <div class="jumbotron p-4"> 
+        <div class="container">
+            <h1 class="jumbotron-heading">Login to Rango</h1> 
+        </div> 
+    </div>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% endblock %}
