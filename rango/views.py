@@ -10,7 +10,7 @@ from rango.models import Page
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-
+from rango.bing_search import run_query
 
 def index(request):
 
@@ -87,6 +87,16 @@ def add_page(request, category_name_slug):
             else: print(form.errors)
     context_dict = {'form': form, 'category': category}
     return render(request, 'rango/add_page.html', context=context_dict)
+
+
+def search(request): 
+    result_list = []
+    if request.method == 'POST':
+        query = request.POST['query'].strip() 
+        if query:
+        # Run our Bing function to get the results list!
+            result_list = run_query(query)
+    return render(request, 'rango/search.html', {'result_list': result_list})
         
 #def register(request):
     #indicates whether reg was succesful
