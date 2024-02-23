@@ -19,7 +19,7 @@
         <p>Profile information is incomplete.</p>
       {% endif %}
     </div>
-    <!-- <a href="{% url 'rango:edit_profile' %}">Edit Profile</a> -->
+    <a href="{% url 'rango:edit_profile' %}">Edit Profile</a>
     
   {% else %}
     <p>You are not logged in. Please <a href="{% url 'rango:login' %}">login</a> to view this page.</p>

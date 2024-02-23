@@ -1,0 +1,15 @@
+{% extends 'rango/base.html' %}
+
+{% block body_block %}
+<div class="jumbotron p-4"> 
+    <div class="container">
+        <h1 class="jumbotron-heading">Edit Profile</h1> 
+    </div>
+</div>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    <button type="submit">Save changes</button>
+</form>
+{% endblock %}

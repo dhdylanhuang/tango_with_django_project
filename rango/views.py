@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from rango.forms import CategoryForm
 from rango.forms import PageForm
-from rango.forms import UserForm, UserProfileForm
+from rango.forms import UserForm, UserProfileForm, UserEditForm
 from rango.models import Category, UserProfile 
 from rango.models import Page
 from django.contrib.auth import authenticate, login, logout
@@ -83,6 +83,21 @@ def profile_view(request):
         'user_profile': user_profile,
     }
     return render(request, 'rango/profile.html', context=context_dict)
+
+def edit_profile(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('rango:profile') 
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = UserProfileForm(instance=request.user.userprofile)
+
+    return render(request, 'rango/edit_profile.html', {'user_form': user_form, 'profile_form': profile_form})
 
 @login_required
 def add_category(request):
