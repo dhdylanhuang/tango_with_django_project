@@ -1,7 +1,7 @@
 from django import forms 
 from rango.models import Page, Category
 from rango.models import UserProfile
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
 
 
 class CategoryForm(forms.ModelForm):
@@ -43,6 +43,11 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password',)
+        
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email',)
 
 class UserProfileForm(forms.ModelForm):
     class Meta:

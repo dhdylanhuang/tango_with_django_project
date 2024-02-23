@@ -14,7 +14,10 @@ urlpatterns = [
             name='add_category'), 
     #path('register/', views.register, name='register'),
     #path('login/', views.user_login, name='login'),
+    #path('logout/', views.user_logout, name='logout'),
     path('restricted/', views.restricted, name='restricted'),
     path('search/', views.search, name='search'),
-    #path('logout/', views.user_logout, name='logout'),
+    path('profile/', views.profile_view, name='profile'),
+    path('rango/goto/', views.goto_url, name='goto'),
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
 ]
