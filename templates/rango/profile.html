@@ -1,27 +1,40 @@
 {% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Profile for {{ selected_user.username }}
+{% endblock %}
 
 {% block body_block %}
-  <h1>User Profile</h1>
-  {% if user.is_authenticated %}
-    <div>
-      <strong>Username:</strong> {{ user.username }}<br>
-      <strong>Email:</strong> {{ user.email }}<br>
-      <!-- Display UserProfile fields if available -->
-      {% if user.userprofile %}
-        <strong>Website:</strong> <a href="{{ user.userprofile.website }}">{{ user.userprofile.website }}</a><br>
-        <strong>Profile Picture:</strong>
-        {% if user.userprofile.profile_picture %}
-          <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture">
-        {% else %}
-          <p>No profile picture provided.</p>
-        {% endif %}
-      {% else %}
-        <p>Profile information is incomplete.</p>
-      {% endif %}
+<div class="jumbotron p-4"> 
+    <div class="container">
+        <h1 class="jumbotron-heading">{{ selected_user.username }}'s Profile</h1> 
     </div>
-    <a href="{% url 'rango:edit_profile' %}">Edit Profile</a>
-    
-  {% else %}
-    <p>You are not logged in. Please <a href="{% url 'rango:login' %}">login</a> to view this page.</p>
-  {% endif %}
+</div>
+
+<div class="container"> 
+    <div class="row">
+        <img src="{{ MEDIA_URL }}{{ user_profile.picture }}" 
+            width="300"
+            height="300"
+            alt="{{ selected_user.username }}'s profile image" />     
+        <br />
+
+        <div>
+            {% if selected_user == user %}
+            <form method="post" action="." enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Update" /> 
+            </form>
+            {% else %} 
+            <p>
+                <strong>Website:</strong>
+                <a href="{{ user_profile.website }}">{{ user_profile.website }}</a> 
+            </p>
+            {% endif %} 
+        </div>
+    </div> 
+</div>
+<a href="{% url 'auth_password_change' %}">Change Password</a>
 {% endblock %}
