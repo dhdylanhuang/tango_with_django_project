@@ -14,10 +14,10 @@
 
 <div class="container"> 
     <div class="row">
-        {% if user_profile_list %} 
+        {% if userprofile_list %} 
         <div class="panel-body">
             <div class="list-group">
-            {% for list_user in user_profile_list %}
+            {% for list_user in userprofile_list %}
                 <div class="list-group-item">
                     <h4 class="list-group-item-heading">
                         <a href="{% url 'rango:profile' list_user.user.username %}"> 
