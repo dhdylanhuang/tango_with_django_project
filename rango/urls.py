@@ -23,4 +23,5 @@ urlpatterns = [
     #path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('register_profile/', views.register_profile, name='register_profile'),
     path('accounts/register/', views.MyRegistrationView.as_view(), name='registration_register'),
+    path('like_category/', views.LikeCategoryView.as_view(), name='like_category'),
 ]
