@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    
     $('#like_btn').click(function() {
         var catecategoryIdVar;
         catecategoryIdVar = $(this).attr('data-categoryid');
@@ -10,4 +11,16 @@ $(document).ready(function() {
                 $('#like_btn').hide();
             })
     });
+
+    $('#search-input').keyup(function() {
+        var query;
+        query = $(this).val();
+
+        $.get('/rango/suggest_category/', 
+            {'suggestion': query}, 
+                function(data) {
+                    $('#categories-listing').html(data);
+                })
+    });
+
 });
