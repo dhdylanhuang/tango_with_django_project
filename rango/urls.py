@@ -24,5 +24,5 @@ urlpatterns = [
     path('register_profile/', views.register_profile, name='register_profile'),
     path('accounts/register/', views.MyRegistrationView.as_view(), name='registration_register'),
     path('like_category/', views.LikeCategoryView.as_view(), name='like_category'),
-    path('suggest/', views.CategorySuggestionView.as_view(), name='suggest'),
+    path('suggest_category/', views.CategorySuggestionView.as_view(), name='suggest'),
 ]

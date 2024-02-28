@@ -93,8 +93,6 @@ class CategorySuggestionView(View):
     def get(self, request):
         if 'suggestion' in request.GET:
             suggestion = request.GET['suggestion']
-        else:
-            suggestion = ''
             
         category_list = get_category_list(max_results=8, starts_with=suggestion)
             
