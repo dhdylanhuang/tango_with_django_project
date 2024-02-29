@@ -1,4 +1,5 @@
 from django.utils.decorators import method_decorator
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -40,27 +41,40 @@ class AboutView(View):
         return render(request, 'rango/about.html',context_dict)
 
 
-def show_category(request, category_name_slug):
-    # create a context dictionary to pass to template rendering engine
-    context_dict = {}
-    try:
-        category = Category.objects.get(slug=category_name_slug)
-        pages = Page.objects.filter(category=category).order_by('-views')
-        context_dict['pages'] = pages
-        context_dict['category'] = category
-    except Category.DoesNotExist:
-        context_dict['category'] = None
-        context_dict['pages'] = None
+class ShowCategoryView(View):
+    def create_context_dict(self, category_name_slug):
+        """
+        A helper method that was created to demonstarte the power of class-based views.
+        You can reuse this method in the get() and post() methods!
+        """
+        context_dict = {}
+
+        try:
+            category = Category.objects.get(slug=category_name_slug)
+            pages = Page.objects.filter(category=category).order_by('-views')
+
+            context_dict['pages'] = pages
+            context_dict['category'] = category
+        except Category.DoesNotExist:
+            context_dict['pages'] = None
+            context_dict['category'] = None
         
-    if request.method == 'POST':
-        if request.method == 'POST':
-            query = request.POST['query'].strip()
+        return context_dict
+    
+    def get(self, request, category_name_slug):
+        context_dict = self.create_context_dict(category_name_slug)
+        return render(request, 'rango/category.html', context_dict)
+    
+    @method_decorator(login_required)
+    def post(self, request, category_name_slug):
+        context_dict = self.create_context_dict(category_name_slug)
+        query = request.POST['query'].strip()
+
         if query:
-            # Assuming run_query is your function to perform the search
-            result_list = run_query(query)
-            context_dict['result_list'] = result_list
+            context_dict['result_list'] = run_query(query)
             context_dict['query'] = query
-    return render(request, 'rango/category.html', context=context_dict)
+        
+        return render(request, 'rango/category.html', context_dict)
 
 @login_required
 def add_category(request):
@@ -251,7 +265,7 @@ def goto_url(request):
     page_id = request.GET.get('page_id')
     if page_id:
         try:
-            page = Page.objects.get(id=page_id)
+            page = get_object_or_404(Page, id=page_id)
             page.views += 1
             page.save()
             return redirect(page.url)
