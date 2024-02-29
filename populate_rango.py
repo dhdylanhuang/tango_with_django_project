@@ -41,11 +41,46 @@ def populate():
          'url':'http://flask.pocoo.org',
          'views': 45}
     ]
+    
+    pascal_pages = [
+        {'title':'Wiki Pascal',
+         'url':'https://en.wikipedia.org/wiki/Pascal_(programming_language)',
+         'views': 34}
+    ]
+    
+    php_pages = [
+        {'title':'PHP Tutorial',
+         'url':'https://www.w3schools.com/php/',
+         'views': 27}
+    ]
+    
+    prolog = [
+        {'title':'Intro into Prolog',
+         'url':'https://www.geeksforgeeks.org/prolog-an-introduction/',
+         'views': 19}
+    ]
+    
+    post_script_pages = [
+        {'title':'What are PostScript Printers',
+         'url':'https://www.ibm.com/docs/en/aix/7.2?topic=configuration-postscript-printers',
+         'views': 19}
+    ]
+    
+    programming_pages = [
+        {'title': 'Best Programming Languages',
+         'url':'https://www.hostinger.co.uk/tutorials/best-programming-languages-to-learn',
+         'views': 238742}
+    ]
 
     cats = {
         'Python': {'pages': python_pages, 'views': 128, 'likes': 64},
         'Django': {'pages': django_pages, 'views': 64, 'likes': 32},
-        'Other Frameworks': {'pages': other_pages, 'views': 32, 'likes': 16}
+        'Other Frameworks': {'pages': other_pages, 'views': 32, 'likes': 16},
+        'Pascal': {'pages': pascal_pages, 'views':34, 'likes':10},
+        'PHP': {'pages': php_pages, 'views':23, 'likes':5},
+        'Prolog': {'pages': prolog, 'views':2, 'likes':1},
+        'Post Script': {'pages': post_script_pages, 'views':4, 'likes':3},
+        'Programming Languages': {'pages': programming_pages, 'views':438, 'likes':345}
     }
 
     # The code below goes through the cats dictionary and adds all the associated pages for that category
