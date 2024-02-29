@@ -33,6 +33,7 @@ $(document).ready(function() {
             {'category_id': categoryid, 'title': title, 'url': url},
             function(data) {
                 $('#page-listing').html(data);
+                location.reload(true);
                 clickedButton.hide();
             });
         })
